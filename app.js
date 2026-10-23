@@ -28,7 +28,6 @@ const P = [
   { s: 'kryzhovnik', k: 'Садовая', n: 'Крыжовник', t: '#5f7d22' },
   { s: 'shampinon', k: 'Культивируемый', n: 'Шампиньон', t: '#8d8172' },
 ];
-const bySlug = Object.fromEntries(P.map((p) => [p.s, p]));
 
 /* ================= MOTIF: frost-crystal construction drawing =================
    One generator for the hero (behind the berries) and the footer fragment. 60° lattice: hexagon, three axes,
@@ -400,108 +399,120 @@ loadGeo().then(() => {
   new IntersectionObserver(([e]) => { if (e.isIntersecting) startMap(); }, { threshold: 0.25 }).observe(mapEl);
 }).catch((e) => console.warn('[c] map data unavailable', e));
 
-/* ================= 04 FOR THE BUYER: tabs (Условия · Документы · Контроль · Калькулятор) ================= */
-const tabs = $$('[data-btabs] [role=tab]'), tabInk = $('[data-btabs-ink]');
-const moveInk = () => { const t = tabs.find((b) => b.getAttribute('aria-selected') === 'true'); if (!t) return; tabInk.style.width = `${t.offsetWidth}px`; tabInk.style.transform = `translateX(${t.offsetLeft}px)`; };
-function selectTab(t, focus) {
-  tabs.forEach((b) => {
-    const on = b === t, p = document.getElementById(b.getAttribute('aria-controls'));
-    b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1;
-    if (on && p.hidden) { p.hidden = false; p.classList.remove('is-anim'); void p.offsetWidth; p.classList.add('is-anim'); }
-    else if (!on) p.hidden = true;
-  });
-  moveInk();
-  if (focus) t.focus();
-  if (!isDesk()) t.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-}
-tabs.forEach((b, i) => {
-  b.addEventListener('click', () => selectTab(b));
-  b.addEventListener('keydown', (e) => {
-    const n = { ArrowRight: i + 1, ArrowLeft: i - 1, Home: 0, End: tabs.length - 1 }[e.key];
-    if (n === undefined) return;
-    e.preventDefault(); selectTab(tabs[(n + tabs.length) % tabs.length], true);
-  });
-});
-moveInk();
-document.fonts?.ready.then(moveInk);
-
-/* calculator (in its tab) */
-const MIN = 200, TRUCK_KG = 20000, TRUCK_PAL = 33;
-const rowsEl = $('[data-rows]'), warn = $('[data-c-warn]'), deck = $('[data-r-deck]');
-deck.innerHTML = '<i></i>'.repeat(TRUCK_PAL);
-const pl = (n, f) => `${fmt(n)} ${plural(n, f)}`;
-const calc = { pack: 25, rows: [{ s: 'chernika', kg: 12000 }] };
-$('[data-goto-calc]').addEventListener('click', () => { const t = $('#bt-calc'); selectTab(t, true); });
-function renderRows() {
-  rowsEl.innerHTML = calc.rows.map((r, i) => `<div class="row" data-row="${i}">
-      <span class="select"><select aria-label="Позиция ${i + 1}" data-row-s>${P.map((p) => `<option value="${p.s}"${p.s === r.s ? ' selected' : ''}${p.s !== r.s && calc.rows.some((o) => o.s === p.s) ? ' disabled' : ''}>${p.n}</option>`).join('')}</select></span>
-      <label class="row__kg"><input type="text" inputmode="numeric" autocomplete="off" aria-label="Объём, кг" value="${r.kg ? fmt(r.kg) : ''}" data-row-kg><span>кг</span></label>
-      <button class="row__x" type="button" aria-label="Убрать позицию"${calc.rows.length < 2 ? ' disabled' : ''} data-row-x>×</button>
-    </div>`).join('');
-  $('[data-add]').disabled = calc.rows.length >= P.length;
-}
-rowsEl.addEventListener('change', (e) => {
-  const sel = e.target.closest('[data-row-s]'); if (!sel) return;
-  calc.rows[+sel.closest('[data-row]').dataset.row].s = sel.value;
-  renderRows(); renderCalc();
-});
-rowsEl.addEventListener('input', (e) => {
-  const inp = e.target.closest('[data-row-kg]'); if (!inp) return;
+/* ================= 04 FOR THE BUYER: load calculator + reefer plan (top view, 33 EUR places) ================= */
+const MIN = 200, TRUCK_KG = 20000, TRUCK_PAL = 33, PAL_Y = 3;
+const bySlug = Object.fromEntries(P.map((p) => [p.s, p]));
+const calc = { pack: 25, kg: 6000, rows: [], truck: 0 };
+const numIn = (inp, set) => inp.addEventListener('input', () => { // digits only, grouped, caret kept from the right
   const caret = inp.value.length - inp.selectionStart;
   const v = Math.min(parseInt(inp.value.replace(/\D/g, ''), 10) || 0, 999999);
-  calc.rows[+inp.closest('[data-row]').dataset.row].kg = v;
   inp.value = v ? fmt(v) : '';
   const pos = Math.max(0, inp.value.length - caret);
   inp.setSelectionRange(pos, pos);
-  renderCalc();
+  set(v); renderCalc();
+});
+numIn($('[data-c-kg]'), (v) => { calc.kg = v; });
+$$('[data-c-pack] input').forEach((r) => r.addEventListener('change', () => { calc.pack = +r.value; renderCalc(); }));
+
+// mixed load: extra rows «product + kg», summed with the main volume
+const rowsEl = $('[data-c-rows]'), addBtn = $('[data-c-add]');
+function renderRows() {
+  rowsEl.innerHTML = calc.rows.map((r, i) => `<div class="bcalc__row" data-row="${i}">
+      <select aria-label="Позиция ${i + 2}" data-row-s>${P.map((p) => `<option value="${p.s}"${p.s === r.s ? ' selected' : ''}>${p.n}</option>`).join('')}</select>
+      <span class="bcalc__rf"><input type="text" inputmode="numeric" autocomplete="off" aria-label="Объём, кг" value="${r.kg ? fmt(r.kg) : ''}" data-row-kg><span>кг</span></span>
+      <button type="button" aria-label="Убрать позицию" data-row-x>×</button>
+    </div>`).join('');
+  $$('[data-row-kg]', rowsEl).forEach((inp) => numIn(inp, (v) => { calc.rows[+inp.closest('[data-row]').dataset.row].kg = v; }));
+  addBtn.disabled = calc.rows.length >= 5;
+}
+rowsEl.addEventListener('change', (e) => {
+  const sel = e.target.closest('[data-row-s]');
+  if (sel) calc.rows[+sel.closest('[data-row]').dataset.row].s = sel.value;
 });
 rowsEl.addEventListener('click', (e) => {
   const x = e.target.closest('[data-row-x]'); if (!x) return;
   calc.rows.splice(+x.closest('[data-row]').dataset.row, 1);
   renderRows(); renderCalc();
+  (rowsEl.querySelector('[data-row-x]') || addBtn).focus({ preventScroll: true });
 });
-$('[data-add]').addEventListener('click', () => {
-  const free = P.find((p) => !calc.rows.some((r) => r.s === p.s));
-  if (!free) return;
+addBtn.addEventListener('click', () => {
+  const free = P.find((p) => !calc.rows.some((r) => r.s === p.s)) || P[0];
   calc.rows.push({ s: free.s, kg: 1000 }); renderRows(); renderCalc();
   $$('[data-row-kg]', rowsEl).at(-1)?.focus({ preventScroll: true });
 });
-$$('[data-c-pack] input').forEach((r) => r.addEventListener('change', () => { calc.pack = +r.value; renderCalc(); }));
+
 function compute() {
-  const size = calc.pack, perPal = size === 25 ? 40 : 80;
-  const items = calc.rows.map((r) => { const units = Math.ceil(r.kg / size); return { ...r, units, pal: Math.ceil(units / perPal) }; });
-  const kg = items.reduce((a, r) => a + r.kg, 0), units = items.reduce((a, r) => a + r.units, 0), pallets = items.reduce((a, r) => a + r.pal, 0);
-  const trucks = Math.max(1, Math.ceil(kg / TRUCK_KG), Math.ceil(pallets / TRUCK_PAL));
-  const byMass = kg / (trucks * TRUCK_KG), byPal = pallets / (trucks * TRUCK_PAL);
-  const palLimit = Math.min(TRUCK_PAL, Math.floor(TRUCK_KG / (perPal * size)));
-  return { size, perPal, items, kg, units, pallets, trucks, palLimit, load: Math.round(Math.max(byMass, byPal) * 100), massBound: byMass >= byPal };
+  const size = calc.pack, perPal = size === 25 ? 40 : 80, palKg = perPal * size;
+  const parts = [{ kg: calc.kg }, ...calc.rows].filter((r) => r.kg > 0) // positions are not mixed on one pallet
+    .map((r) => { const units = Math.ceil(r.kg / size); return { ...r, units, pal: Math.ceil(units / perPal) }; });
+  const kg = parts.reduce((a, r) => a + r.kg, 0), units = parts.reduce((a, r) => a + r.units, 0), pallets = parts.reduce((a, r) => a + r.pal, 0);
+  const palLimit = Math.min(TRUCK_PAL, Math.floor(TRUCK_KG / palKg)); // 20 t caps the 33 places: 20 bag / 25 box pallets
+  const trucks = Math.max(1, Math.ceil(pallets / palLimit));
+  const load = []; // truck 1 is filled to the limit, the remainder goes to the next one
+  for (let t = 0, pLeft = pallets, kLeft = kg; t < trucks; t++) {
+    const pal = Math.min(palLimit, pLeft), m = Math.min(kLeft, pal * palKg);
+    const byMass = m / TRUCK_KG, byPal = pal / TRUCK_PAL;
+    load.push({ pal, pct: Math.max(1, Math.round(Math.max(byMass, byPal) * 100)), massBound: byMass >= byPal });
+    pLeft -= pal; kLeft -= m;
+  }
+  return { size, perPal, palKg, parts, kg, units, pallets, palLimit, trucks, load };
 }
+const pl = (n, f) => `${fmt(n)}${NB}${plural(n, f)}`;
+const F_UNIT = { 25: ['мешок', 'мешка', 'мешков'], 10: ['коробка', 'коробки', 'коробок'] }, F_PAL = ['паллета', 'паллеты', 'паллет'], F_TR = ['рефрижератор', 'рефрижератора', 'рефрижераторов'];
+const eqText = (c) => `${pl(c.units, F_UNIT[c.size])} · ${pl(c.pallets, F_PAL)} · ${c.trucks > 1 ? pl(c.trucks, F_TR) : `${c.load[0].pct}${NB}% рефрижератора`}`;
+const kgText = (c) => (calc.rows.length
+  ? `${[calc.kg ? `${fmt(calc.kg)}${NB}кг` : '', ...calc.rows.filter((r) => r.kg).map((r) => `${bySlug[r.s].n} ${fmt(r.kg)}${NB}кг`)].filter(Boolean).join(' + ')} (итого ${fmt(c.kg)}${NB}кг)`
+  : `${fmt(c.kg)}${NB}кг`);
+
+// deck: 11 rows along × 3 across, filled from the front wall (reefer unit) to the doors
+const deck = $('[data-deck]');
+deck.innerHTML = Array.from({ length: TRUCK_PAL }, (_, i) => {
+  const x = 280 + Math.floor(i / PAL_Y) * 120, y = 60 + (i % PAL_Y) * 80;
+  return `<rect x="${x + 4}" y="${y + 4}" width="112" height="72"/>`;
+}).join('');
+const cells = $$('rect', deck);
+let shown = 0, target = 0, stepT = 0, seen = reduced || QA;
+const setCells = () => cells.forEach((r, i) => r.classList.toggle('on', i < shown));
+function paint() {
+  clearTimeout(stepT);
+  if (!seen) return;
+  if (reduced) { shown = target; setCells(); return; }
+  const step = () => {
+    if (shown === target) return;
+    shown += shown < target ? 1 : -1; setCells();
+    stepT = setTimeout(step, 25);
+  };
+  step();
+}
+new IntersectionObserver(([e], o) => { if (e.isIntersecting) { seen = true; o.disconnect(); paint(); } }, { threshold: 0.35 }).observe($('[data-r-svg]'));
+
 function renderCalc() {
-  const c = compute(), bag = c.size === 25;
-  warn.hidden = c.kg >= MIN;
-  $('[data-r-kg]').textContent = fmt(c.kg);
-  $('[data-r-kg-d]').textContent = `позиций: ${c.items.length}`;
-  $('[data-r-unit-k]').textContent = bag ? 'Мешков, 25 кг' : 'Коробок, 10 кг';
-  $('[data-r-units]').textContent = fmt(c.units);
-  $('[data-r-units-d]').textContent = c.units * c.size === c.kg ? `ровно ${fmt(c.kg)}${NB}кг` : `${fmt(c.units * c.size)}${NB}кг — целые места`;
-  $('[data-r-pal]').textContent = fmt(c.pallets);
-  $('[data-r-pal-d]').textContent = `до ${c.perPal} ${bag ? 'мешков' : 'коробок'} на паллете`;
-  $('[data-r-load]').textContent = `${c.load}${NB}%`;
-  $('[data-r-load-d]').textContent = `${pl(c.trucks, ['машина', 'машины', 'машин'])} · ${c.massBound ? 'по массе' : 'по паллетам'}`;
-  const first = Math.min(c.palLimit, Math.ceil(c.pallets / c.trucks));
-  const tones = [];
-  for (const it of c.items) for (let k = 0; k < it.pal; k++) tones.push(bySlug[it.s].t);
-  $$('i', deck).forEach((cell, i) => {
-    const on = i < first, lim = i >= c.palLimit;
-    cell.classList.toggle('on', on); cell.classList.toggle('lim', lim);
-    cell.style.background = on ? tones[i] : '';
-  });
-  $('[data-r-truck-n]').textContent = `План загрузки${c.trucks > 1 ? ` · машина 1 из ${c.trucks}` : ''} · ${first} из ${TRUCK_PAL} мест`;
-  $('[data-r-lg]').innerHTML = c.items.filter((it) => it.kg > 0).map((it) => `<li><i style="background:${bySlug[it.s].t}"></i>${bySlug[it.s].n}</li>`).join('');
-  $('[data-c-cta]').disabled = c.kg < MIN;
+  const c = compute(), low = c.kg < MIN;
+  calc.truck = Math.min(calc.truck, c.trucks - 1);
+  const t = c.load[calc.truck], by = t.massBound ? 'по&nbsp;массе' : 'по&nbsp;местам';
   const eq = (n, f) => `<span><b>${fmt(n)}</b>${NB}${plural(n, f)}</span>`;
-  $('[data-r-eq]').innerHTML = `<i>=</i> ${eq(c.units, bag ? ['мешок', 'мешка', 'мешков'] : ['коробка', 'коробки', 'коробок'])} <i>·</i> ${eq(c.pallets, ['паллета', 'паллеты', 'паллет'])} <i>·</i> ${eq(c.trucks, ['рефрижератор', 'рефрижератора', 'рефрижераторов'])}`;
+  $('[data-r-eq]').innerHTML = low
+    ? `<span class="bcalc__warn">Минимальная партия&nbsp;— 200&nbsp;кг</span>`
+    : `${eq(c.units, F_UNIT[c.size])} <i>·</i> ${eq(c.pallets, F_PAL)} <i>·</i> ${c.trucks > 1 ? eq(c.trucks, F_TR) : `<span><b>${t.pct}${NB}%</b>${NB}рефрижератора</span>`}`;
+  const sum = $('[data-c-sum]');
+  sum.hidden = !calc.rows.length;
+  sum.innerHTML = `итого <b>${fmt(c.kg)}</b>${NB}кг · ${pl(c.parts.length, ['позиция', 'позиции', 'позиций'])}`;
+  $('[data-r-pct]').innerHTML = `${low ? 0 : t.pct}<u>%</u>`;
+  $('[data-r-pct-d]').innerHTML = c.trucks > 1 ? `загрузка машины ${calc.truck + 1} из&nbsp;${c.trucks}<br>${by}` : `загрузка рефрижератора<br>${by}`;
+  $('[data-r-truck]').textContent = c.trucks > 1 ? `План загрузки · ${pl(c.trucks, F_TR)}` : 'План загрузки · вид сверху';
+  $('[data-r-nav]').hidden = c.trucks < 2;
+  $('[data-r-nav-t]').textContent = `машина ${calc.truck + 1} / ${c.trucks}`;
+  $('[data-r-prev]').disabled = calc.truck === 0;
+  $('[data-r-next]').disabled = calc.truck >= c.trucks - 1;
+  cells.forEach((r, i) => r.classList.toggle('lim', i >= c.palLimit));
+  $('[data-r-lg-on]').textContent = `${low ? 0 : t.pal} из ${TRUCK_PAL} мест`;
+  $('[data-r-lg-lim]').hidden = c.palLimit >= TRUCK_PAL;
+  $('[data-r-lg-lim-t]').innerHTML = `лимит 20&nbsp;т (${fmt(c.palKg)}&nbsp;кг на&nbsp;паллете)`;
+  $('[data-c-cta]').disabled = low;
+  target = low ? 0 : t.pal; paint();
 }
+$('[data-r-prev]').addEventListener('click', () => { calc.truck--; renderCalc(); });
+$('[data-r-next]').addEventListener('click', () => { calc.truck++; renderCalc(); });
 renderRows(); renderCalc();
 
 /* ================= SCROLL: native only. Menu anchors = CSS scroll-behavior + scroll-margin-top ================= */
@@ -553,18 +564,15 @@ applyChannel();
 nameIn.addEventListener('input', () => { if (nameIn.value.trim()) nameBox.classList.remove('is-err'); });
 contactIn.addEventListener('input', () => { if (contactBox.classList.contains('is-err') && CH[channel()].ok(contactIn.value)) contactBox.classList.remove('is-err'); });
 
-// перенос из калькулятора (#buyer): расчёт → скрытое поле + чип; кнопки «Запросить …» просто ведут к форме
+// перенос из калькулятора (#buyer): расчёт → скрытое поле + чип
 const calcIn = $('[data-calc]', form), calcChip = $('[data-calc-chip]', form);
 const setCalc = (t) => { calcIn.value = t; calcChip.hidden = !t; $('[data-calc-t]', form).textContent = t ? `Ваш расчёт: ${t}` : ''; };
 $('[data-calc-x]', form).addEventListener('click', () => setCalc(''));
 $('[data-c-cta]').addEventListener('click', () => {
   const c = compute();
-  const list = c.items.filter((it) => it.kg > 0);
-  setCalc(`${list.map((it) => `${bySlug[it.s].n} ${fmt(it.kg)} кг`).join(', ')} · ${c.size === 25 ? 'мешок 25 кг' : 'коробка 10 кг'}`);
+  setCalc(`${kgText(c)} · ${c.size === 25 ? 'мешок 25 кг' : 'коробка 10 кг'} = ${eqText(c)}`);
   toForm();
 });
-$('[data-req-docs]').addEventListener('click', (e) => { e.preventDefault(); toForm(); });
-$$('[data-req]').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); toForm(); }));
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -636,4 +644,4 @@ if (document.documentElement.classList.contains('rvon')) {
 }
 
 let rz = 0;
-addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { buildMap(); moveInk(); }, 150); });
+addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(buildMap, 150); });

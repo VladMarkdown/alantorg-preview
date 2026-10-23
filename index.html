@@ -27,7 +27,6 @@
   <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3.2 20.8l4.5-1.2A8.8 8.8 0 1 0 12 3.2Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.1 7.8c-.3 0-.8.1-1 .6-.4.8-.3 2 .6 3.4 1 1.5 2.3 2.6 3.9 3.2 1.2.5 2.2.3 2.7-.4.3-.4.3-.8.1-1l-1.5-.8c-.3-.1-.5 0-.7.2l-.5.6c-.9-.4-1.8-1.2-2.3-2.1l.5-.5c.2-.2.2-.4.1-.7l-.7-1.6c-.1-.2-.3-.3-.6-.3h-.6Z" fill="currentColor"/></symbol>
   <symbol id="i-vb" viewBox="0 0 24 24"><path d="M12 3c-5.2 0-8.2 1.9-8.2 7.4 0 3.2 1.1 5.2 3.2 6.3V20.6l2.9-2.7c.7.1 1.4.1 2.1.1 5.2 0 8.2-1.9 8.2-7.6C20.2 4.9 17.2 3 12 3Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9.5 7.3c-.5 0-1 .4-1 .9.1 2.9 2.5 5.4 5.4 5.6.5 0 .9-.4.9-.9v-.7c0-.3-.2-.5-.4-.6l-1.1-.4c-.2-.1-.5 0-.6.2l-.4.5c-.9-.4-1.6-1.1-2-2l.5-.4c.2-.2.3-.4.2-.6l-.4-1.1c-.1-.3-.3-.5-.6-.5H9.5Z" fill="currentColor"/><path d="M13.4 6.4a3.2 3.2 0 0 1 2.7 2.7M13.4 4.7a4.9 4.9 0 0 1 4.4 4.4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></symbol>
   <!-- Viber and phone: same 24-grid / 1.5 stroke language as #i-tg and #i-wa -->
-  <symbol id="i-pdf" viewBox="0 0 24 24"><path d="M6 2.75h8.5L18.25 6.5v14.75H6z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M14.25 2.75V6.75h4M12 10v6.5m-2.75-2.75L12 16.5l2.75-2.75" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
   <!-- brand mark: the «A» drawn on the 60° lattice of a frost crystal, inside its hexagon; the ice dot is the crystal's nucleus -->
   <symbol id="i-logo" viewBox="0 0 32 32"><path d="M16 1.3 28.7 8.65v14.7L16 30.7 3.3 23.35V8.65Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.2 23.2 16 9.7l7.8 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="miter"/><path d="M11.1 18.2h9.8" stroke="currentColor" stroke-width="1.5"/><circle cx="16" cy="18.2" r="2.1" fill="#8cc8f0"/></symbol>
   <!-- motif icons (24 grid, 1.5 stroke, built on the same 60° lattice) -->
@@ -259,143 +258,108 @@
   </div>
 </section>
 
-<!-- ================= 04 FOR THE BUYER: terms · documents · control · calculator ================= -->
+<!-- ================= 04 FOR THE BUYER: terms in figures · load calculator · links ================= -->
 <section class="sec sec--mist" id="buyer">
   <div class="wrap">
     <div class="rule rv-line" aria-hidden="true"></div>
-    <div class="g12 buy">
-      <div class="buy__side">
-        <header class="rv">
-          <p class="lbl sh__n">04 / Закупщику</p>
-          <h2 class="h2">Условия, документы и&nbsp;контроль партии</h2>
-          <p class="prod__lead">Цена&nbsp;— по&nbsp;позиции, объёму и&nbsp;базису. Нормативы&nbsp;— ТР&nbsp;ТС&nbsp;021/2011.</p>
-        </header>
-        <figure class="shot buy__shot rv-mask">
-          <img src="./img/backlit.webp" width="1600" height="2000" alt="Ягода черники в инее, контровой свет" loading="lazy" decoding="async">
-          <figcaption class="shot__cap"><span class="mono">Образец партии</span><span class="mono dim">3D</span></figcaption>
-        </figure>
-      </div>
-
-      <div class="buy__main rv" style="--d:1">
-        <dl class="bfacts" aria-label="Ключевые условия поставки">
-          <div class="bfact"><dt class="bfact__k">Минимальная партия</dt><dd class="bfact__v"><span class="bfact__p">от</span><span class="v">200<u>кг</u></span></dd></div>
-          <div class="bfact"><dt class="bfact__k">Крафт-мешок / коробка</dt><dd class="bfact__v"><span class="v">25 / 10<u>кг</u></span></dd></div>
-          <div class="bfact bfact--c"><dt class="bfact__k">Рефрижератор в&nbsp;пути</dt><dd class="bfact__v"><span class="v">−18<u>°C</u></span></dd></div>
-          <div class="bfact"><dt class="bfact__k">Отсрочка платежа</dt><dd class="bfact__v"><span class="bfact__p">до</span><span class="v x">XX<u>дней</u></span></dd></div>
-        </dl>
-
-        <div class="btabs" role="tablist" aria-label="Для закупщика" data-btabs>
-          <button type="button" role="tab" id="bt-terms" aria-controls="bp-terms" aria-selected="true"><span class="btabs__n">01</span><svg aria-hidden="true"><use href="#i-terms"/></svg><b>Условия</b><em>фасовка, оплата, доставка</em></button>
-          <button type="button" role="tab" id="bt-docs" aria-controls="bp-docs" aria-selected="false" tabindex="-1"><span class="btabs__n">02</span><svg aria-hidden="true"><use href="#i-docs"/></svg><b>Документы</b><em>декларации, сертификаты</em></button>
-          <button type="button" role="tab" id="bt-ctrl" aria-controls="bp-ctrl" aria-selected="false" tabindex="-1"><span class="btabs__n">03</span><svg aria-hidden="true"><use href="#i-ctrl"/></svg><b>Контроль</b><em>лаборатория, протоколы</em></button>
-          <button type="button" role="tab" id="bt-calc" aria-controls="bp-calc" aria-selected="false" tabindex="-1"><span class="btabs__n">04</span><svg aria-hidden="true"><use href="#i-calc"/></svg><b>Калькулятор</b><em>объём → мешки, паллеты, машины</em></button>
-          <i class="btabs__ink" data-btabs-ink aria-hidden="true"></i>
-        </div>
-
-        <!-- terms -->
-        <div class="bp" role="tabpanel" id="bp-terms" aria-labelledby="bt-terms" tabindex="0">
-          <div class="spec spec--b" role="table" aria-label="Условия поставки">
-            <div class="spec__r" role="row"><span role="cell" class="spec__i">01</span><span role="cell" class="spec__t">Минимальная партия</span><span role="cell" class="spec__v"><span class="v">200<u>кг</u></span></span><span role="cell" class="spec__d">Сборная загрузка: несколько позиций в&nbsp;одном рефрижераторе</span></div>
-            <div class="spec__r" role="row"><span role="cell" class="spec__i">02</span><span role="cell" class="spec__t">Фасовка</span><span role="cell" class="spec__val">Мешок 25&nbsp;кг · коробка 10&nbsp;кг</span><span role="cell" class="spec__d mono">Паллета EUR 1200×800</span></div>
-            <div class="spec__r" role="row"><span role="cell" class="spec__i">03</span><span role="cell" class="spec__t">Цена и&nbsp;оплата</span><span role="cell" class="spec__val">По&nbsp;запросу, отсрочка возможна</span><span role="cell" class="spec__d"><span class="x">Срок отсрочки — до __ дней, по договору</span></span></div>
-            <div class="spec__r" role="row"><span role="cell" class="spec__i">04</span><span role="cell" class="spec__t">Доставка</span><span role="cell" class="spec__val">Рефрижератор, −18&nbsp;°C · СНГ и&nbsp;экспорт</span><span role="cell" class="spec__d"><span class="x mono">Incoterms: EXW / FCA / DAP</span></span></div>
-          </div>
-          <details class="acc">
-            <summary>РФ, ЕАЭС и&nbsp;экспорт: оформление <span class="tbd">заполняется</span></summary>
-            <dl class="kv acc__kv">
-              <div><dt class="lbl">Таможенное оформление</dt><dd class="x">Порядок оформления</dd></div>
-              <div><dt class="lbl">Документы на партию</dt><dd class="x">Перечень документов</dd></div>
-              <div><dt class="lbl">Контакт направления</dt><dd class="x">Менеджер РФ / ЕАЭС / Export</dd></div>
-            </dl>
-          </details>
-          <p class="bp__foot"><a class="btn btn--dark" href="#contact" data-req="Прайс">Запросить прайс<i></i></a><button class="more" type="button" data-goto-calc>Рассчитать загрузку<i></i></button><a class="more" href="/terms/" data-stub>Полные условия<i></i></a></p>
-        </div>
-
-        <!-- documents -->
-        <div class="bp" role="tabpanel" id="bp-docs" aria-labelledby="bt-docs" tabindex="0" hidden>
-          <ul class="dcards">
-            <li class="dcard"><p class="dcard__top"><span class="dcard__fmt">PDF</span><span class="tbd">заполняется</span></p><h3 class="dcard__t">Декларация ЕАЭС · ягоды</h3><p class="dcard__n mono">ТР&nbsp;ТС&nbsp;021/2011, 022/2011</p><dl class="dcard__m"><div><dt>№</dt><dd class="x mono">ХХХХ-ХХХХ</dd></div><div><dt>Срок</dt><dd class="x mono">до ХХ.ХХ.ХХХХ</dd></div></dl><a class="dcard__dl" href="/quality/" data-stub><svg aria-hidden="true"><use href="#i-pdf"/></svg>Скачать<span class="x mono">PDF · ХХХ КБ</span></a></li>
-            <li class="dcard"><p class="dcard__top"><span class="dcard__fmt">PDF</span><span class="tbd">заполняется</span></p><h3 class="dcard__t">Декларация ЕАЭС · грибы</h3><p class="dcard__n mono">ТР&nbsp;ТС&nbsp;021/2011, 022/2011</p><dl class="dcard__m"><div><dt>№</dt><dd class="x mono">ХХХХ-ХХХХ</dd></div><div><dt>Срок</dt><dd class="x mono">до ХХ.ХХ.ХХХХ</dd></div></dl><a class="dcard__dl" href="/quality/" data-stub><svg aria-hidden="true"><use href="#i-pdf"/></svg>Скачать<span class="x mono">PDF · ХХХ КБ</span></a></li>
-            <li class="dcard"><p class="dcard__top"><span class="dcard__fmt">PDF</span><span class="tbd">заполняется</span></p><h3 class="dcard__t">Протокол испытаний</h3><p class="dcard__n mono">образец</p><dl class="dcard__m"><div><dt>№</dt><dd class="x mono">ХХХХ-ХХХХ</dd></div><div><dt>Срок</dt><dd class="x mono">до ХХ.ХХ.ХХХХ</dd></div></dl><a class="dcard__dl" href="/quality/" data-stub><svg aria-hidden="true"><use href="#i-pdf"/></svg>Скачать<span class="x mono">PDF · ХХХ КБ</span></a></li>
-            <li class="dcard dcard--req"><p class="dcard__top"><span class="dcard__fmt dcard__fmt--o">Комплект</span></p><h3 class="dcard__t">Комплект для аудита поставщика</h3><p class="dcard__n mono">по запросу</p><a class="dcard__dl" href="#contact" data-req-docs><svg aria-hidden="true"><use href="#i-docs"/></svg>Запросить комплект<span class="docs__go" aria-hidden="true">→</span></a></li>
-          </ul>
-          <p class="bp__foot"><a class="btn btn--dark" href="/quality/documents.zip" data-stub>Скачать пакет документов<i></i></a><a class="more" href="/quality/" data-stub>Все документы<i></i></a></p>
-        </div>
-
-        <!-- control -->
-        <div class="bp" role="tabpanel" id="bp-ctrl" aria-labelledby="bt-ctrl" tabindex="0" hidden>
-          <div class="chk__h"><span class="lbl">Показатели контроля сырья</span><span class="lbl">Допустимый уровень <span class="tbd">уточняется</span></span></div>
-          <ul class="chk" aria-label="Показатели контроля сырья">
-            <li class="chk__r"><span class="chk__m" aria-hidden="true"></span><span class="chk__b"><b class="chk__t">Цезий-137</b><span class="chk__n mono">ТР&nbsp;ТС&nbsp;021/2011 · метод: <span class="x">уточняется</span></span></span><span class="chk__v"><span class="x mono">≤ ХХХ Бк/кг</span></span></li>
-            <li class="chk__r"><span class="chk__m" aria-hidden="true"></span><span class="chk__b"><b class="chk__t">Стронций-90</b><span class="chk__n mono">ТР&nbsp;ТС&nbsp;021/2011 · метод: <span class="x">уточняется</span></span></span><span class="chk__v"><span class="x mono">≤ ХХ Бк/кг</span></span></li>
-            <li class="chk__r"><span class="chk__m" aria-hidden="true"></span><span class="chk__b"><b class="chk__t">Остаточные пестициды</b><span class="chk__n mono">ТР&nbsp;ТС&nbsp;021/2011 · метод: <span class="x">уточняется</span></span></span><span class="chk__v"><span class="x mono">по перечню, мг/кг</span></span></li>
-            <li class="chk__r"><span class="chk__m" aria-hidden="true"></span><span class="chk__b"><b class="chk__t">Протокол испытаний</b><span class="chk__n mono"><span class="x">на партию</span></span></span><span class="chk__v"><span class="x mono">копия — до отгрузки</span></span></li>
-          </ul>
-          <p class="bp__foot"><a class="btn btn--dark" href="#contact" data-req="Протокол испытаний на партию">Запросить протокол испытаний<i></i></a><a class="more" href="/quality/" data-stub>Методика контроля<i></i></a></p>
-        </div>
-
-        <!-- calculator -->
-        <div class="bp" role="tabpanel" id="bp-calc" aria-labelledby="bt-calc" tabindex="0" hidden>
-          <div class="calc">
-            <form class="calc__in" data-calc onsubmit="return false">
-              <p class="lbl">Позиции и объём, кг</p>
-              <div class="rows" data-rows></div>
-              <button class="addrow" type="button" data-add><span aria-hidden="true">+</span>Добавить позицию — смешанная загрузка</button>
-              <fieldset class="field">
-                <legend class="lbl">Фасовка</legend>
-                <div class="seg" data-c-pack>
-                  <label><input type="radio" name="pack" value="25" checked><span><b>Мешок</b><em class="mono">25&nbsp;кг</em></span></label>
-                  <label><input type="radio" name="pack" value="10"><span><b>Коробка</b><em class="mono">10&nbsp;кг</em></span></label>
-                </div>
-              </fieldset>
-              <p class="field__warn" data-c-warn hidden>Минимум&nbsp;— 200&nbsp;кг</p>
-            </form>
-            <div class="calc__out" data-c-out aria-live="polite">
-              <div class="calc__eq">
-                <p class="calc__eq-k"><span class="lbl">Результат</span><span class="mono dim">ориентировочно</span></p>
-                <p class="calc__eq-v" data-r-eq>= 480 мешков · 12 паллет · 1 рефрижератор</p>
-              </div>
-              <dl class="res">
-                <div class="res__cell"><dt class="lbl">Итого, кг</dt><dd class="res__v" data-r-kg>12 000</dd><dd class="res__d" data-r-kg-d>позиций: 1</dd></div>
-                <div class="res__cell"><dt class="lbl" data-r-unit-k>Мешков, 25 кг</dt><dd class="res__v" data-r-units>480</dd><dd class="res__d" data-r-units-d>ровно 12 000 кг</dd></div>
-                <div class="res__cell"><dt class="lbl">Паллет EUR</dt><dd class="res__v" data-r-pal>12</dd><dd class="res__d" data-r-pal-d>по позициям</dd></div>
-                <div class="res__cell"><dt class="lbl">Загрузка</dt><dd class="res__v" data-r-load>60 %</dd><dd class="res__d" data-r-load-d>по массе</dd></div>
-              </dl>
-              <div class="truck">
-                <div class="truck__head"><p class="mono" data-r-truck-n>План загрузки</p><ul class="truck__lg" data-r-lg></ul></div>
-                <div class="truck__body"><div class="truck__cab" aria-hidden="true"></div><div class="truck__deck" data-r-deck role="img" aria-label="Схема загрузки рефрижератора: 33 паллетоместа"></div></div>
-                <p class="truck__key mono"><i class="k k--on"></i>занято<i class="k"></i>свободно<i class="k k--lim"></i>лимит 20&nbsp;т</p>
-              </div>
-              <p class="calc__note">Ориентировочно. Паллета EUR: 40&nbsp;мешков (1&nbsp;000&nbsp;кг) или 80&nbsp;коробок (800&nbsp;кг). Рефрижератор 13,6&nbsp;м: 33&nbsp;паллеты или 20&nbsp;т.</p>
-              <button class="btn btn--dark btn--lg calc__cta" type="button" data-c-cta>Запросить цену на&nbsp;этот объём<i></i></button>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="g12 bt">
+      <header class="bt__h rv">
+        <p class="lbl sh__n">04 / Закупщику</p>
+        <h2 class="h2">Условия поставки</h2>
+        <p class="prod__lead">Цена&nbsp;— по&nbsp;позиции, объёму и&nbsp;базису поставки.</p>
+      </header>
+      <dl class="bnum rv" style="--d:1" aria-label="Ключевые условия поставки">
+        <div><dt>минимальная партия</dt><dd><span class="v">200<u>кг</u></span></dd></div>
+        <div><dt>мешок / коробка</dt><dd><span class="v">25&thinsp;/&thinsp;10<u>кг</u></span></dd></div>
+        <div class="bnum--c"><dt>рефрижератор в&nbsp;пути</dt><dd><span class="v">−18<u>°C</u></span></dd></div>
+        <div><dt>отсрочка платежа</dt><dd><span class="bnum__p">до</span><span class="v"><span class="x">XX</span><u>дней</u></span></dd></div>
+      </dl>
     </div>
+
+    <form class="bcalc mat rv" style="--d:2" data-bcalc onsubmit="return false" aria-label="Калькулятор загрузки рефрижератора">
+      <div class="bcalc__l">
+        <div class="bcalc__k">
+          <p class="lbl sh__n">Рассчитать загрузку</p>
+          <div class="bcalc__pack" role="radiogroup" aria-label="Фасовка" data-c-pack>
+            <label><input type="radio" name="pack" value="25" checked><span>мешок 25&nbsp;кг</span></label>
+            <label><input type="radio" name="pack" value="10"><span>коробка 10&nbsp;кг</span></label>
+          </div>
+        </div>
+        <label class="bcalc__in"><span class="bcalc__cap">Объём, кг</span><span class="bcalc__f"><input type="text" inputmode="numeric" autocomplete="off" value="6 000" data-c-kg><span>кг</span></span></label>
+        <div class="bcalc__rows" data-c-rows></div>
+        <div class="bcalc__mix">
+          <button class="bcalc__add" type="button" data-c-add>+ добавить позицию</button>
+          <span class="bcalc__sum" data-c-sum hidden></span>
+        </div>
+        <div class="bcalc__out" aria-live="polite">
+          <p class="bcalc__eq" data-r-eq></p>
+          <p class="bcalc__note">ориентировочно · паллета EUR 1200×800&nbsp;мм: до&nbsp;40&nbsp;мешков (~1&nbsp;000&nbsp;кг) или 80&nbsp;коробок (~800&nbsp;кг) · рефрижератор 13,6&nbsp;м: 33&nbsp;места EUR, до&nbsp;20&nbsp;т</p>
+        </div>
+        <button class="btn btn--light btn--lg bcalc__cta" type="button" data-c-cta>Запросить цену на&nbsp;этот объём<i></i></button>
+      </div>
+      <div class="bcalc__r">
+        <div class="bcalc__rh">
+          <p class="lbl" data-r-truck>План загрузки · вид сверху</p>
+          <div class="bcalc__nav" data-r-nav hidden>
+            <button type="button" data-r-prev aria-label="Предыдущая машина">‹</button><span class="mono" data-r-nav-t>1 / 2</span><button type="button" data-r-next aria-label="Следующая машина">›</button>
+          </div>
+        </div>
+        <div class="bcalc__load"><span class="v" data-r-pct>30<u>%</u></span><span class="bcalc__load-d" data-r-pct-d>загрузка по&nbsp;массе</span></div>
+        <svg class="reef" viewBox="0 0 1720 372" role="img" aria-label="Схема рефрижератора, вид сверху" data-r-svg>
+          <defs><pattern id="reefHatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="14" class="reef__h"/></pattern></defs>
+          <g class="reef__cab">
+            <path d="M226 74 H70 Q22 74 22 122 V238 Q22 286 70 286 H226 Z"/>
+            <path d="M62 86 Q40 92 40 132 V228 Q40 268 62 274" class="reef__thin"/>
+            <path d="M84 74 V60 M84 286 V300" class="reef__thin"/>
+          </g>
+          <rect class="reef__unit" x="234" y="96" width="36" height="168"/>
+          <path class="reef__thin" d="M252 96 V44 H300"/>
+          <text class="reef__t reef__t--c" x="308" y="52">−18 °C</text>
+          <rect class="reef__body" x="270" y="56" width="1360" height="248"/>
+          <rect class="reef__thin" x="275" y="61" width="1350" height="238"/>
+          <path class="reef__thin" d="M1630 64 V180 M1630 180 V296" />
+          <g data-deck></g>
+          <g class="reef__dim">
+            <path d="M270 316 V348 M1630 316 V348 M270 336 H1630"/>
+            <text class="reef__t" x="950" y="370">13 600</text>
+            <path d="M1642 56 H1680 M1642 304 H1680 M1664 56 V304"/>
+            <text class="reef__t" x="1694" y="180" transform="rotate(90 1694 180)">2 480</text>
+          </g>
+        </svg>
+        <ul class="bcalc__lg">
+          <li><i class="on"></i><span data-r-lg-on>6 из 33 мест</span></li>
+          <li><i></i>свободно</li>
+          <li data-r-lg-lim><i class="lim"></i><span data-r-lg-lim-t>сверх 20&nbsp;т</span></li>
+        </ul>
+      </div>
+    </form>
+
+    <ul class="blinks rv" style="--d:3">
+      <li><a class="more" href="/quality/" data-stub>Документы и&nbsp;сертификаты<i></i></a></li>
+      <li><a class="more" href="/quality/#control" data-stub>Контроль качества<i></i></a></li>
+      <li><a class="more" href="/terms/" data-stub>Все условия поставки<i></i></a></li>
+    </ul>
   </div>
 </section>
 
-<!-- ================= 05 CONTACT ================= -->
-<section class="sec" id="contact">
+<!-- ================= 05 CONTACT (dark finale) ================= -->
+<section class="sec sec--dark mat cta-sec" id="contact">
+  <div class="lattice" aria-hidden="true"></div>
+  <svg class="geo geo--cta" data-crystal="cta" viewBox="-110 -110 220 220" aria-hidden="true"></svg>
   <div class="wrap">
     <div class="rule rv-line" aria-hidden="true"></div>
     <div class="g12 cta">
       <header class="cta__m rv">
         <p class="lbl sh__n">05 / Запрос прайса</p>
-        <h2 class="h2">Запросить прайс</h2>
-        <p class="cta__lead">Оставьте контакт&nbsp;— пришлём актуальный прайс и&nbsp;ответим на&nbsp;вопросы.</p>
-        <dl class="kv cta__kv">
-          <div><dt class="lbl">Телефон</dt><dd><a href="tel:+375296651372">+375&nbsp;(29)&nbsp;665-13-72</a></dd></div>
-          <div><dt class="lbl">E-mail</dt><dd><a href="mailto:contact@alantorg.by">contact@alantorg.by</a></dd></div>
-          <div><dt class="lbl">Мессенджеры</dt><dd class="cta__msg">
-            <!-- ЗАГЛУШКИ: заменить реальными контактами компании -->
-            <a href="https://t.me/alantorg_xxx" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
-            <a href="viber://chat?number=%2B375XXXXXXXXX"><svg aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
-            <a href="https://wa.me/375XXXXXXXXX" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
-          </dd></div>
-          <div><dt class="lbl">Адрес</dt><dd>Беларусь, Гомельская обл., г.&nbsp;Петриков, 2‑й&nbsp;пер.&nbsp;Первомайский, д.&nbsp;1б, к.&nbsp;1</dd></div>
-        </dl>
+        <h2 class="cta__h">Прайс на&nbsp;сезон&nbsp;— <span class="x">в&nbsp;течение рабочего дня</span></h2>
+        <a class="cta__tel" href="tel:+375296651372">+375&nbsp;(29)&nbsp;665-13-72</a>
+        <p class="cta__sub"><a href="mailto:contact@alantorg.by">contact@alantorg.by</a><span>Беларусь, Гомельская обл., г.&nbsp;Петриков, 2‑й&nbsp;пер.&nbsp;Первомайский, д.&nbsp;1б, к.&nbsp;1</span></p>
+        <p class="cta__msg">
+          <!-- ЗАГЛУШКИ: заменить реальными контактами компании -->
+          <a href="https://t.me/alantorg_xxx" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-tg"/></svg>Telegram</a>
+          <a href="viber://chat?number=%2B375XXXXXXXXX"><svg aria-hidden="true"><use href="#i-vb"/></svg>Viber</a>
+          <a href="https://wa.me/375XXXXXXXXX" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-wa"/></svg>WhatsApp</a>
+        </p>
         <a class="more" href="/contacts/" data-stub>Менеджеры по&nbsp;направлениям<i></i></a>
       </header>
 
@@ -431,7 +395,6 @@
             <p class="mono dim">Макет: данные не&nbsp;отправляются.</p>
           </div>
         </form>
-
       </div>
     </div>
   </div>

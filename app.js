@@ -330,10 +330,11 @@ function buildMap() {
   svg += `<text x="${tx0}" y="${py + cdy + 17}" text-anchor="${ta}" font-size="14" font-weight="500" letter-spacing=".08em" fill="#fff">ПЕТРИКОВ</text>`;
   svg += `<text x="${tx0}" y="${py + cdy + 36}" text-anchor="${ta}" font-size="13" fill="rgba(238,242,246,.78)">${small ? `IQF 4 т/ч<tspan x="${tx0}" dy="16">2 000+ т</tspan>` : 'IQF 4 т/ч · 2 000+ т'}</text>`;
   // country labels (13px, letter-spaced) go into free space, tried in order
+  const padR = (r, m = 12) => ({ x0: r.x0 - m, x1: r.x1 + m, y0: r.y0 - m, y1: r.y1 + m }); // breathing room around other labels and the callout
   const country = (txt, cands) => {
     const w = txt.length * cfs * 0.86;
     const fit = cands.map(([lo, la]) => { const [x, y] = P(lo, la); return { x, y, r: { x0: x - w / 2, x1: x + w / 2, y0: y - cfs, y1: y + 4 } }; })
-      .filter((c) => c.r.x0 >= W * 0.1 && c.r.x1 <= W * 0.9 && c.r.y0 >= H * 0.1 && c.r.y1 <= H * 0.9 && !hit(c.r));
+      .filter((c) => c.r.x0 >= W * 0.1 && c.r.x1 <= W * 0.9 && c.r.y0 >= H * 0.1 && c.r.y1 <= H * 0.9 && !hit(padR(c.r)));
     const c = fit.find((q) => !onRoute(q.r)) || fit[0]; // prefer a spot clear of route lines
     if (!c) return;
     obst.push(c.r);
@@ -342,7 +343,6 @@ function buildMap() {
   country('БЕЛАРУСЬ', [[28.4, 55.5], [27.0, 55.7], [29.8, 55.7], [26.4, 55.2], [30.8, 55.3], [26.2, 52.9], [31.2, 53.3], [25.6, 53.5], [29.2, 54.3]]);
   if (!small) {
     country('РОССИЯ', [[41.6, 53.6], [42.6, 53.0], [43, 54.2], [41, 49.6], [45, 52.2], [44.5, 50], [41.5, 57.5]]);
-    country('ПОЛЬША', [[19.3, 51.1], [18.6, 52.3], [19, 50.3], [20.2, 53.6], [21.8, 50.4], [22.5, 50.0], [20, 49.6], [18, 53.6], [17.5, 51.6], [21.5, 51.0], [21, 50.6], [23, 50.8], [21.8, 53.8], [20.5, 54.2]]);
   }
   mapSvg.setAttribute('viewBox', `0 0 ${W} ${H}`);
   mapSvg.innerHTML = svg;

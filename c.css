@@ -900,3 +900,12 @@ html.rvon .rv-line.is-in { transform: none; }
   .cta__msg a { flex: 1 1 auto; justify-content: center; padding: 0 10px; }
   .geo--cta { width: 420px; left: -200px; top: 20px; }
 }
+
+/* contacts: how to get there — route links + map loaded on demand */
+.route { margin-top: 32px; }
+.route__k { margin-bottom: 12px; }
+.route__btns { margin-top: 0; }
+.route__show { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1px solid var(--ln-2); font-size: 14px; color: inherit; background: none; cursor: pointer; transition: border-color .2s, background-color .2s; }
+.route__show:hover, .route__show[aria-expanded='true'] { border-color: var(--ice); background: rgba(140, 200, 240, .08); }
+.route__map { margin-top: 12px; aspect-ratio: 16 / 10; border: 1px solid var(--ln-2); overflow: hidden; }
+.route__map iframe { display: block; width: 100%; height: 100%; border: 0; filter: grayscale(1) invert(.92) contrast(.88) brightness(.95); }

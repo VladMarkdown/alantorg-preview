@@ -645,3 +645,18 @@ if (document.documentElement.classList.contains('rvon')) {
 
 let rz = 0;
 addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(buildMap, 150); });
+
+/* ================= contacts: map on demand ================= */
+{
+  const btn = document.querySelector('[data-route-show]'), box = document.querySelector('[data-route-map]');
+  if (btn && box) btn.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') !== 'true';
+    btn.setAttribute('aria-expanded', String(open));
+    box.hidden = !open;
+    if (open && !box.firstChild) {
+      const f = document.createElement('iframe');
+      f.src = box.dataset.src; f.title = 'Аланторг на карте'; f.loading = 'lazy'; f.allowFullscreen = true;
+      box.append(f);
+    }
+  });
+}
